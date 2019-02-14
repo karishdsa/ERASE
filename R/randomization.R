@@ -592,33 +592,6 @@ zscoreStdNmlDistr  <- function(obs, ran, file.prefix){
 #--------------------------
 
 
-#Variables for the plots
-MULTI <- 1
-
-TITLE_SIZE <- 10*MULTI
-LEGEND_TITLE_SIZE <- 10*MULTI
-LEGEND_TEXT_SIZE <- 8*MULTI
-AXIS_TITLE_SIZE <- 10*MULTI
-AXIS_TEXT_SIZE <- 8*MULTI
-POSITION_DODGE_WIDTH <- 0.5
-
-theme_clearBg <- theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                       panel.background = element_blank(), axis.line = element_line(colour = "black"))
-
-theme_legend <- theme(legend.title = element_text(colour="black", size=LEGEND_TITLE_SIZE, face="bold"),
-                      legend.text = element_text(colour="black", size=LEGEND_TEXT_SIZE))
-
-theme_title <- theme(plot.title = element_text(size=TITLE_SIZE, face="bold", hjust = 0.5)) #hjust =0.5 to centre
-theme_subtitle <- theme(plot.subtitle=element_text(size=TITLE_SIZE-1, hjust=0.5, face="italic"))
-#X and Y axes labels, text
-theme_axes <- theme(axis.title = element_text(face="bold", size=AXIS_TITLE_SIZE),
-                    axis.text  = element_text( vjust=0.5, size=AXIS_TEXT_SIZE) )
-
-fill_legend <- scale_fill_manual(values=c("turquoise4", "yellow3"))
-fill_legend_meanavgRds <- scale_fill_manual(values=c("seagreen4", "slateblue3"))
-
-
-
 
 #Functions
 
@@ -695,6 +668,34 @@ plotMeanSNPsPerField2Chk4DistrBin <- function( obs,ran , field2chk4distr, fname.
 
 
   comb <- rbindlist( list(avgPerBin, obsPerBin))
+
+
+  #Variables for the plots
+  MULTI <- 1
+
+  TITLE_SIZE <- 10*MULTI
+  LEGEND_TITLE_SIZE <- 10*MULTI
+  LEGEND_TEXT_SIZE <- 8*MULTI
+  AXIS_TITLE_SIZE <- 10*MULTI
+  AXIS_TEXT_SIZE <- 8*MULTI
+  POSITION_DODGE_WIDTH <- 0.5
+
+  #theme_clearBg <- theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+  #                       panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+  theme_legend <- theme(legend.title = element_text(colour="black", size=LEGEND_TITLE_SIZE, face="bold"),
+                        legend.text = element_text(colour="black", size=LEGEND_TEXT_SIZE))
+
+  theme_title <- theme(plot.title = element_text(size=TITLE_SIZE, face="bold", hjust = 0.5)) #hjust =0.5 to centre
+  theme_subtitle <- theme(plot.subtitle=element_text(size=TITLE_SIZE-1, hjust=0.5, face="italic"))
+  #X and Y axes labels, text
+  theme_axes <- theme(axis.title = element_text(face="bold", size=AXIS_TITLE_SIZE),
+                      axis.text  = element_text( vjust=0.5, size=AXIS_TEXT_SIZE) )
+
+  fill_legend <- scale_fill_manual(values=c("turquoise4", "yellow3"))
+  fill_legend_meanavgRds <- scale_fill_manual(values=c("seagreen4", "slateblue3"))
+
+  #End variables
 
   stitle <- basename(fname.prefix)
   title <- paste0( "Distribution of mean #SNPs per bin (", field2chk4distr, ") of \n the randomly selected and the observed")

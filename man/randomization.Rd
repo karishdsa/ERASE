@@ -7,7 +7,7 @@ enrichment(SAE, MAE respectively).
 If the mode is SAE, generates the p-value else zscores.}
 \usage{
 randomization(df_sigASE_SNPann, df_nonASE_SNPann, colname_rankSNPann,
-  colname_chk4distr, nIterations = 10000, outFilePrefix,
+  colname_chk4distr, outFilePrefix, nIterations = 10000,
   seedValue = NULL, bins = NULL, mode = "SAE")
 }
 \arguments{
@@ -24,18 +24,20 @@ the column name "cmp.col" and those passed via the parameters
 colname_rankSNPann and colname_chk4distr}
 
 \item{colname_rankSNPann}{the column name in the above two
-data framesto be used to rank the SNPs/ calculate the mean
-e.g. in case of GWAS "neglog10pval" containing -log10(p)}
+data frames with the transformed SNP score,
+to be used to rank the SNPs/ calculate the mean
+e.g. in case of GWAS p value can be transformed to
+ "neglog10pval" containing -log10(p)}
 
 \item{colname_chk4distr}{name of the column to be used to check the
 distribution of the randomly selected values (in df_nonASE_SNPann)
 are same as that in the df_sigASE_SNPann e.g. "averageReads"}
 
-\item{nIterations}{number of random selection iterations.
-Default value of 10000}
-
 \item{outFilePrefix}{The names of all the output files
 generated will be assigned this prefix}
+
+\item{nIterations}{number of random selection iterations.
+Default value of 10000}
 
 \item{seedValue}{The seed value to be set. If NULL then no seed
 is set.}
@@ -43,11 +45,14 @@ is set.}
 \item{bins}{bins to which loci are to be assigned based on their
 value in colname_chk4distr.
 If not provided and value NULL - code will assign it a binwidth
-of 2 as long as the colname_chk4distr value is  < 200 and the
-remaining are put in a single last bin.}
+of 2 ( in variable 'eraseBinwidth') as long as the
+colname_chk4distr value is  < 200 (in variable 'eraseBinwidthEnd')
+and the remaining are placed in a single last bin.
+The defaults can be changed by assigning the
+variables 'eraseBinwidth' and 'eraseBinwidthEnd' new values.}
 
 \item{mode}{- default value of 'SAE', calculates the p-value
-else will only run the randomization step assuming MAE}
+else for MAE will transform into z-score}
 }
 \value{
 the pnorm p-value
@@ -55,7 +60,8 @@ the pnorm p-value
 \description{
 The randomization step is run. This is followed by the p-value
 calulation if the mode is SAE. If the mode is not SAE, assumes
-MAE and generates the z-scores
+MAE and generates the z-scores.
+The default binwidth is set to 2 (see bins parameter below)
 The following output files are generated for randomization
 and saved in the current directory
    <outFilePrefix>_obsRandomVals.rda :
@@ -63,7 +69,8 @@ and saved in the current directory
        distribution of the mean observed and random values
    <outFilePrefix>_DistrMeanSNPsPerBin.pdf
 if mode is SAE
-   <outFilePrefix>_obsRandomValsZscorePval.rda
+   <outFilePrefix>_obsRandomValsZscorePval.rda - contains the zscores for
+   the observed, randomly selected  values and the pnorm pvalue
    <outFilePrefix>_DistributionPvalZscore.pdf
  else
   <outFilePrefix>_zscoreNmlDistr.rda
