@@ -20,32 +20,24 @@ and multiple (MAE) annotation datasets.
 To test if the ASEs are enriched for SNPs in an annotation dataset e.g. a GWAS summary 
 dataset.
 
-1. Intersection : Get the overlap of the SNPs examined for ASE(ASE dataset) 
-and the SNP annotation dataset using *getIntersection()*. 
-  
-  #### Input files  
-    - ASE dataset : This file should have all the SNPs that were examined 
-      for ASE and contain the following columns:  
-      - with the name 'cmp.col' that contains e.g. the rsid or chr:pos values
-        to compare with that in the SNP annotation dataset
-      - column containing values to be accounted for during randomization e.g. the average 
-        read depth and 
-      - column with values to assess the ASE significance e.g. FDR, p-value
-    - SNP annotation dataset : e.g. GWAS summary dataset . It should contain the following 
-      columns:
-      - with the name 'cmp.col' that contains e.g. the rsid or chr:pos values
-        to compare with that in the ASE dataset.
-      - column with values ranking the SNPs e.g. p-values
+1. Intersection : Get the overlap of the SNPs examined for ASE(ASE dataset) and the SNP annotation dataset using *getIntersection()*. 
+
+   #### Input files  
+   *ASE dataset : This file should have all the SNPs that were examined for ASE and contain the following columns:  
+    - with the name 'cmp.col' that contains e.g. the rsid or chr:pos values to compare with that in the SNP annotation dataset
+    - column containing values to be accounted for during randomization e.g. the average read depth and 
+    - column with values to assess the ASE significance e.g. FDR, p-value
+   *SNP annotation dataset : e.g. GWAS summary dataset . It should contain the following columns:
+    - with the name 'cmp.col' that contains e.g. the rsid or chr:pos values to compare with that in the ASE dataset.
+    - column with values ranking the SNPs e.g. p-values
 
   
-  #### Example
-  *ase_annotation <- getIntersection(<df_ase>, <df_snpAnn>)*
+   #### Example
+   *ase_annotation <- getIntersection(<df_ase>, <df_snpAnn>)*
   
-  where <df_ase> and <df_snpAnn> are data frame objects corresponding to the 
-  the ASE dataset. 
-  The default SNP annotation dataset is 'GWAS' with 'p' as the column header 
-  for values ranking its SNPs. 
-  See help() for details on optional parameters and their defaults.
+   where <df_ase> and <df_snpAnn> are data frame objects corresponding to the the ASE dataset.  
+   The default SNP annotation dataset is 'GWAS' with 'p' as the column header for values ranking its SNPs.  
+   See help() for details on optional parameters and their defaults.
         
 2. Randomization and p-value calculation : Run the Randomization process with *randomization()*, 
 using the overlapping SNPs obtained from Step 1, to get the p-value for enrichment. 
