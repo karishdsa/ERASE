@@ -23,14 +23,14 @@ dataset.
 **1. Intersection** 
    Get the overlap of the SNPs examined for ASE(ASE dataset) and the SNP annotation dataset using *getIntersection()*. 
 
-   #### Input files  
-   *ASE dataset : This file should have all the SNPs that were examined for ASE and contain the following columns:  
-    - with the name 'cmp.col' that contains e.g. the rsid or chr:pos values to compare with that in the SNP annotation dataset
-    - column containing values to be accounted for during randomization e.g. the average read depth and 
-    - column with values to assess the ASE significance e.g. FDR, p-value  
-   *SNP annotation dataset : e.g. GWAS summary dataset. It should contain the following columns:
-    - with the name 'cmp.col' that contains e.g. the rsid or chr:pos values to compare with that in the ASE dataset.
-    - column with values ranking the SNPs e.g. p-values
+     **Input files**  
+     * ASE dataset : This file should have all the SNPs that were examined for ASE and contain the following columns:  
+       - with the name 'cmp.col' that contains e.g. the rsid or chr:pos values to compare with that in the SNP annotation dataset
+       - column containing values to be accounted for during randomization e.g. the average read depth and 
+       - column with values to assess the ASE significance e.g. FDR, p-value
+     * SNP annotation dataset : e.g. GWAS summary dataset. It should contain the following columns:
+       - with the name 'cmp.col' that contains e.g. the rsid or chr:pos values to compare with that in the ASE dataset.
+       - column with values ranking the SNPs e.g. p-values
 
   
    #### Example
