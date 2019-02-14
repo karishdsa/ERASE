@@ -45,7 +45,7 @@ using the overlapping SNPs obtained from Step 1, to get the p-value for enrichme
   
   
   #### Example
-   *randomization( <df_sigASE_ann>, <df_nonASE_ann> , <colname_rankSNPann>,<colname_chk4distr>,<outFilePrefix> )*
+   *randomization( <df_sigASE_ann>, <df_nonASE_ann>, <colname_rankSNPann>, <colname_chk4distr>, <outFilePrefix> )*
   
   where 
   <df_sigASE_ann> and <df_nonASE_ann> are data frame objects containing the significant 
