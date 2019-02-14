@@ -20,7 +20,8 @@ and multiple (MAE) annotation datasets.
 To test if the ASEs are enriched for SNPs in an annotation dataset e.g. a GWAS summary 
 dataset.
 
-1. Intersection : Get the overlap of the SNPs examined for ASE(ASE dataset) and the SNP annotation dataset using *getIntersection()*. 
+**1. Intersection** 
+   Get the overlap of the SNPs examined for ASE(ASE dataset) and the SNP annotation dataset using *getIntersection()*. 
 
    #### Input files  
    *ASE dataset : This file should have all the SNPs that were examined for ASE and contain the following columns:  
