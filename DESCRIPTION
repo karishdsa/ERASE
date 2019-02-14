@@ -1,0 +1,16 @@
+Package: ERASE
+Type: Package
+Title: Extended Randomization for Assessment of Multiple Annotation Enrichment in ASE Datasets
+Version: 0.1.0
+Author: Karishma D'Sa
+Maintainer: Karishma D'Sa <karishma.m.dsa@gmail.com>
+Description: The ERASE package assesses the enrichment of ASE sites in single
+    or multiple annotation datasets using a randomization based approach 
+    that accounts for read depth, an important bias in ASE detection
+License: Creative Commons
+Encoding: UTF-8
+LazyData: true
+Imports: ggplot2,
+    gridExtra,
+    data.table
+RoxygenNote: 6.1.1
