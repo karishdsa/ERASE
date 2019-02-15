@@ -34,7 +34,7 @@ dataset.
   
    #### Example
    *ase_annotation <- getIntersection(<df_ase>, <df_snpAnn>)*  
-   where <df_ase> and <df_snpAnn> are data frame objects corresponding to the the ASE dataset.  
+   where *<df_ase>* and *<df_snpAnn>* are data frame objects corresponding to the the ASE dataset.  
    The default SNP annotation dataset is 'GWAS' with 'p' as the column header for values ranking its SNPs.  
    
    See help() for more details, optional parameters and their defaults.  
@@ -45,10 +45,10 @@ using the overlapping SNPs obtained from Step 1 above, to get the p-value for en
    #### Example
    *randomization( <df_sigASE_ann>, <df_nonASE_ann>, <colname_rankSNPann>, <colname_chk4distr>, <outFile_prefix>)*    
    where     
-   <df_sigASE_ann> and <df_nonASE_ann> are data frame objects containing the significant and non significant ASE signals - the output of getIntersection()  
-   <colname_rankSNPann> is the name of the column with the transformed SNP score e.g. in case of GWAS the p-value can be transformed to "neglog10pval" containing -log10(p), that is used to rank the SNPs  
-   <colname_chk4distr> name of the column containing values to be accounted for during randomization e.g. the average read depth  
-   <outFile_prefix> the name to be prefixed to all the output files generated.  
+   *<df_sigASE_ann>* and <df_nonASE_ann> are data frame objects containing the significant and non significant ASE signals - the output of getIntersection()  
+   *<colname_rankSNPann>* is the name of the column with the transformed SNP score e.g. in case of GWAS the p-value can be transformed to "neglog10pval" containing -log10(p), that is used to rank the SNPs  
+   *<colname_chk4distr>* name of the column containing values to be accounted for during randomization e.g. the average read depth  
+   *<outFile_prefix>* the name to be prefixed to all the output files generated.  
    Randomization is run for a default 10000 iterations with bin size of 2. 
   
    See help() for more details, optional parameters, their defaults and output files generated.  
@@ -78,17 +78,17 @@ the overlapping SNPs obtained from the previous step, to get the scores for each
    #### Example
    *randomization()* is run using *ase_ann1_ann2* obtained from *getIntersectionMae()*, once using the transformed SNP scores of annotation1 to rank the SNPs as in (a) below  
    
-   *(a)  randomization( <sigASE_ann>, <nonASE_ann> , <colname_rankSNPann1>, <colname_chk4distr>, <outFilePrefix_ann1>, eraseMode="MAE" )*  
+   (a)  *randomization( <sigASE_ann>, <nonASE_ann> , <colname_rankSNPann1>, <colname_chk4distr>, <outFilePrefix_ann1>, eraseMode="MAE" )*  
    
    and the second time using the transformed SNP scores of annotation2 as in (b)  
    
-   *(b)  randomization( <sigASE_ann>, <nonASE_ann> , <colname_rankSNPann2>, <colname_chk4distr>, <outFilePrefix_ann2>, eraseMode="MAE" )*  
+   (b)  *randomization( <sigASE_ann>, <nonASE_ann> , <colname_rankSNPann2>, <colname_chk4distr>, <outFilePrefix_ann2>, eraseMode="MAE" )*  
    
    where  
-   <sigASE_ann>, <nonASE_ann> are data frame objects containing the significant and non significant ASE signals - the output of *getIntersectionMae()*  
-   <colname_rankSNPann1>,  <colname_rankSNPann2>  are the names of the columns with the transformed SNP scores for annotation 1 and annotation2 respectively that is used to rank the SNPs. 
-    <colname_chk4distr> name of the column containing values to be accounted for during randomization e.g. the average read depth  
-    <outFilePrefix_ann1>, <outFilePrefix_ann2> the names to be prefixed to all the output files generated for annotaion1 and annotation2 respectively.  
+   *<sigASE_ann>*, *<nonASE_ann>* are data frame objects containing the significant and non significant ASE signals - the output of *getIntersectionMae()*  
+   *<colname_rankSNPann1>*,  *<colname_rankSNPann2>*  are the names of the columns with the transformed SNP scores for annotation 1 and annotation2 respectively that is used to rank the SNPs.  
+   <colname_chk4distr> name of the column containing values to be accounted for during randomization e.g. the average read depth  
+   *<outFilePrefix_ann1>*, *<outFilePrefix_ann2>* the names to be prefixed to all the output files generated for annotaion1 and annotation2 respectively.  
   
     See help() for more details, optional parameters, their defaults and output files generated.
 
