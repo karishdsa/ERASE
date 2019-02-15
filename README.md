@@ -45,7 +45,7 @@ using the overlapping SNPs obtained from Step 1 above, to get the p-value for en
    #### Example
    *randomization( <df_sigASE_ann>, <df_nonASE_ann>, <colname_rankSNPann>, <colname_chk4distr>, <outFile_prefix>)*    
    where     
-   *<df_sigASE_ann>* and <df_nonASE_ann> are data frame objects containing the significant and non significant ASE signals - the output of getIntersection()  
+   *<df_sigASE_ann>* and <df_nonASE_ann> are data frame objects containing the significant and non significant ASE signals - the output of *getIntersection()*  
    *<colname_rankSNPann>* is the name of the column with the transformed SNP score e.g. in case of GWAS the p-value can be transformed to "neglog10pval" containing -log10(p), that is used to rank the SNPs  
    *<colname_chk4distr>* name of the column containing values to be accounted for during randomization e.g. the average read depth  
    *<outFile_prefix>* the name to be prefixed to all the output files generated.  
@@ -87,7 +87,7 @@ the overlapping SNPs obtained from the previous step, to get the scores for each
    where  
    *<sigASE_ann>*, *<nonASE_ann>* are data frame objects containing the significant and non significant ASE signals - the output of *getIntersectionMae()*  
    *<colname_rankSNPann1>*,  *<colname_rankSNPann2>*  are the names of the columns with the transformed SNP scores for annotation 1 and annotation2 respectively that is used to rank the SNPs.  
-   <colname_chk4distr> name of the column containing values to be accounted for during randomization e.g. the average read depth  
+   *<colname_chk4distr>* name of the column containing values to be accounted for during randomization e.g. the average read depth  
    *<outFilePrefix_ann1>*, *<outFilePrefix_ann2>* the names to be prefixed to all the output files generated for annotaion1 and annotation2 respectively.  
   
     See help() for more details, optional parameters, their defaults and output files generated.
@@ -100,10 +100,10 @@ the p-value calculated for the alpha.
 i.e. for a list of alpha values, by calling *integrationPvalCalc()* multiple times e.g with lapply()
 
    #### Example
-   *pvalue <- integrationPvalCalc(<rdaAnn1>, <rdaAnn2>, <outFilePrefix>, <alpha>)*  
+   *pvalue <- integrationPvalCalc(<rdaAnn1>, <rdaAnn2>, <outFile_prefix>, <alpha>)*  
    where  
-   <rdaAnn1> and <rdaAnn2> are the transformed z-score rda file names for annotation1 and annotation2 obtained from the Randomimzation and Transformation step.
-   <outFilePrefix> the name to be prefixed to all the output files generated.  
-   <alpha> is the relative weight to be assigned to the annotation1 can have values ranging from 0 to 1.default is 0.5  
+   *<rdaAnn1>* and *<rdaAnn2>* are the transformed z-score rda file names for annotation1 and annotation2 obtained from the Randomimzation and Transformation step.
+   *<outFile_prefix>* the name to be prefixed to all the output files generated.  
+   *<alpha>* is the relative weight to be assigned to the annotation1 can have values ranging from 0 to 1.default is 0.5  
    
    See help() for details on further optional parameters, their defaults and output files generated.
