@@ -4,12 +4,12 @@ ERASE assesses ASE data for enrichment of SNPs in a single or multiple annotatio
 with the aim of gaining insight into its specific properties. It does this accounting for 
 read depth an important bias in ASE detection. 
 
-ERASE is described in our paper : ERASE: Extended Randomization for assessment of 
+ERASE is described in our paper, ERASE: Extended Randomization for assessment of 
 multiple annotation enrichment in ASE datasets <link>
 
 
 ## Install
-install.packages("ERASE")
+devtools::install_github("kmdsa/ERASE")
 
 ## Usage
 This section describes the steps to run ERASE examining enrichment in single (SAE) 
@@ -23,21 +23,21 @@ dataset.
 **1. Intersection :** Get the overlap of the SNPs examined for ASE(ASE dataset) and the SNP annotation dataset using *getIntersection()*. 
 
    #### Input files  
-   * ASE dataset : This file should have all the SNPs that were examined for ASE and contain the following columns:  
-     - with the name 'cmp.col' that contains e.g. the rsid or chr:pos values to compare with that in the SNP annotation dataset
-     - column containing values to be accounted for during randomization e.g. the average read depth and 
+   * ASE dataset : This file should have all the SNPs that were examined for ASE and the following :  
+     - column name 'cmp.col' that contains e.g. the rsid or chr:pos values to compare with that in the SNP annotation dataset
+     - column with values to be accounted for during randomization e.g. the average read depth and 
      - column with values to assess the ASE significance e.g. FDR, p-value
-   * SNP annotation dataset : e.g. GWAS summary dataset. It should contain the following columns:
-     - with the name 'cmp.col' that contains e.g. the rsid or chr:pos values to compare with that in the ASE dataset.
+   * SNP annotation dataset : e.g. GWAS summary dataset. It should contain the following :
+     - column name 'cmp.col' that contains e.g. the rsid or chr:pos values to compare with that in the ASE dataset.
      - column with values ranking the SNPs e.g. p-values
 
   
    #### Example
-   *ase_annotation <- getIntersection(<df_ase>, <df_snpAnn>)*
+   *ase_annotation <- getIntersection(<df_ase>, <df_snpAnn>)*  
    where <df_ase> and <df_snpAnn> are data frame objects corresponding to the the ASE dataset.  
    The default SNP annotation dataset is 'GWAS' with 'p' as the column header for values ranking its SNPs.  
    
-   See help() for details on optional parameters and their defaults.  
+   See help() for more details, optional parameters and their defaults.  
         
 **2. Randomization and p-value calculation :** Run the Randomization process with *randomization()*, 
 using the overlapping SNPs obtained from Step 1 above, to get the p-value for enrichment. 
@@ -51,7 +51,8 @@ using the overlapping SNPs obtained from Step 1 above, to get the p-value for en
    <outFilePrefix> the name to be prefixed to all the output files generated.  
    Randomization is run for a default 10000 iterations with bin size of 2. 
   
-   See help() for details on further optional parameters, their defaults and output files generated.
+   See help() for more details, optional parameters, their defaults and output files generated.  
+
 
 
 ### ERASE - multiple annotation enrichment (MAE)
@@ -60,13 +61,15 @@ specificity datasets.
 
 **1. Intersection :** Get the SNPs common to the ASE and two annotation datasets by running *getIntersectionMae()*.
 The function takes as input the overlap of the SNPs examined for ASE and each of the SNP annotation dataset
-separately. This can be obtained by running *getIntersection()* for each SNP annotation , ASE dataset combination.
+separately. This can be obtained by running *getIntersection()* for each SNP annotation and ASE dataset combination.
 
    #### Example
    *ase_annotation1 <- getIntersection(<df_ase>, <df_snpAnn1>)*  
    *ase_annotation2 <- getIntersection(<df_ase>, <df_snpAnn2>)*  
   
    *ase_ann1_ann2 <- getIntersectionMae(ase_annotation1, ase_annotation2)*  
+   
+   See help() for more details, optional parameters and their defaults.
   
 **2. Randomization and Transformation :** Run the Randomization process with *randomization()* twice, using 
 the overlapping SNPs obtained from the previous step, to get the scores for each of the SNP annotations.
@@ -79,12 +82,11 @@ the overlapping SNPs obtained from the previous step, to get the scores for each
    See help() for details on further optional parameters, their defaults and output files generated.
 
 **3. Integration and p-value calculation :** Examine enrichment based on the value assigned to the 
-calibration parameter alpha (indicates the relative weight of the SNP annotation1). Call 
-*integrationPvalCalc()* using the tansformed zscores obtained in the previous step. This function returns 
+calibration parameter alpha (indicates the relative weight of the SNP annotation1). Call *integrationPvalCalc()* using the tansformed zscores obtained in the previous step. This function returns 
 the p-value calculated for the alpha. 
 
    Enrichment can also be examined by varying the relative importance of the two annotation datasets, 
-i.e. for a list of alpha values, by calling *integrationPvalCalc() multiple times e.g with lapply()
+i.e. for a list of alpha values, by calling *integrationPvalCalc()* multiple times e.g with lapply()
 
    #### Example
    *pvalue <- integrationPvalCalc(<rdaAnn1>, <rdaAnn2>, <outFilePrefix>, <alpha>)*  
