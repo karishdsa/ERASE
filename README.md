@@ -43,7 +43,7 @@ dataset.
 using the overlapping SNPs obtained from Step 1 above, to get the p-value for enrichment. 
   
    #### Example
-   *randomization( <df_sigASE_ann>, <df_nonASE_ann>, <colname_rankSNPann>, <colname_chk4distr>, <outFilePrefix>)*    
+   *randomization( <df_sigASE_ann>, <df_nonASE_ann>, <colname_rankSNPann>, <colname_chk4distr>, <outFilePrefix_ann>)*    
    where     
    <df_sigASE_ann> and <df_nonASE_ann> are data frame objects containing the significant and non significant ASE signals - the output of getIntersection()  
    <colname_rankSNPann> is the name of the column with the transformed SNP score e.g. in case of GWAS the p-value can be transformed to "neglog10pval" containing -log10(p)  
