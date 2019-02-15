@@ -46,8 +46,8 @@ using the overlapping SNPs obtained from Step 1 above, to get the p-value for en
    *randomization( <df_sigASE_ann>, <df_nonASE_ann>, <colname_rankSNPann>, <colname_chk4distr>, <outFile_prefix>)*    
    where     
    <df_sigASE_ann> and <df_nonASE_ann> are data frame objects containing the significant and non significant ASE signals - the output of getIntersection()  
-   <colname_rankSNPann> is the name of the column with the transformed SNP score e.g. in case of GWAS the p-value can be transformed to "neglog10pval" containing -log10(p)  
-   <colname_chk4distr> column containing values to be accounted for during randomization e.g. the average read depth  
+   <colname_rankSNPann> is the name of the column with the transformed SNP score e.g. in case of GWAS the p-value can be transformed to "neglog10pval" containing -log10(p), that is used to rank the SNPs  
+   <colname_chk4distr> name of the column containing values to be accounted for during randomization e.g. the average read depth  
    <outFile_prefix> the name to be prefixed to all the output files generated.  
    Randomization is run for a default 10000 iterations with bin size of 2. 
   
@@ -76,10 +76,17 @@ the overlapping SNPs obtained from the previous step, to get the scores for each
 *randomization()* called with the parameter 'mode' set to 'MAE' generates the transformed z-scores.
   
    #### Example
-   *randomization( <sigASE_ann1>, <nonASE_ann1> , <colname_rankSNPann1>, <colname_chk4distr>, <outFilePrefix_ann1>, eraseMode="MAE" )*  
-   *randomization( <sigASE_ann2>, <nonASE_ann2> , <colname_rankSNPann2>, <colname_chk4distr>, <outFilePrefix_ann2>, eraseMode="MAE" )*  
-   where
-   See help() for details on further optional parameters, their defaults and output files generated.
+   *randomization()* is run using *ase_ann1_ann2* obtained from *getIntersectionMae()*, once using the transformed SNP scores of annotation1 to rank the SNPs as in (a) below
+   *(a)  randomization( <sigASE_ann>, <nonASE_ann> , <colname_rankSNPann1>, <colname_chk4distr>, <outFilePrefix_ann1>, eraseMode="MAE" )*  
+   and the second time using the transformed SNP scores of annotation2 as in (b)
+   *(b)  randomization( <sigASE_ann>, <nonASE_ann> , <colname_rankSNPann2>, <colname_chk4distr>, <outFilePrefix_ann2>, eraseMode="MAE" )*  
+   where  
+   <sigASE_ann>, <nonASE_ann> are data frame objects containing the significant and non significant ASE signals - the output of *getIntersectionMae()*  
+   <colname_rankSNPann1>,  <colname_rankSNPann2>  are the names of the columns with the transformed SNP scores for annotation 1 and annotation2 respectively that is used to rank the SNPs. 
+    <colname_chk4distr> name of the column containing values to be accounted for during randomization e.g. the average read depth  
+    <outFilePrefix_ann1>, <outFilePrefix_ann2> the names to be prefixed to all the output files generated for annotaion1 and annotation2 respectively.  
+  
+    See help() for more details, optional parameters, their defaults and output files generated.
 
 **3. Integration and p-value calculation :** Examine enrichment based on the value assigned to the 
 calibration parameter alpha (indicates the relative weight of the SNP annotation1). Call *integrationPvalCalc()* using the tansformed zscores obtained in the previous step. This function returns 
