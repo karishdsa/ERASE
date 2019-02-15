@@ -24,11 +24,11 @@ dataset.
 
    #### Input files  
    * ASE dataset : This file should have all the SNPs that were examined for ASE and the following :  
-     - column name 'cmp.col' that contains e.g. the rsid or chr:pos values to compare with that in the SNP annotation dataset
+     - column name *'cmp.col'* that contains e.g. the rsid or chr:pos values to compare with that in the SNP annotation dataset
      - column with values to be accounted for during randomization e.g. the average read depth and 
      - column with values to assess the ASE significance e.g. FDR, p-value
    * SNP annotation dataset : e.g. GWAS summary dataset. It should contain the following :
-     - column name 'cmp.col' that contains e.g. the rsid or chr:pos values to compare with that in the ASE dataset.
+     - column name *'cmp.col'* that contains e.g. the rsid or chr:pos values to compare with that in the ASE dataset.
      - column with values ranking the SNPs e.g. p-values
 
   
@@ -89,8 +89,8 @@ the overlapping SNPs obtained from the previous step, to get the scores for each
    *<colname_rankSNPann1>*,  *<colname_rankSNPann2>*  are the names of the columns with the transformed SNP scores for annotation 1 and annotation2 respectively that is used to rank the SNPs.  
    *<colname_chk4distr>* name of the column containing values to be accounted for during randomization e.g. the average read depth  
    *<outFilePrefix_ann1>*, *<outFilePrefix_ann2>* the names to be prefixed to all the output files generated for annotaion1 and annotation2 respectively.  
-  
-    See help() for more details, optional parameters, their defaults and output files generated.
+   
+   See help() for more details, optional parameters, their defaults and output files generated.
 
 **3. Integration and p-value calculation :** Examine enrichment based on the value assigned to the 
 calibration parameter alpha (indicates the relative weight of the SNP annotation1). Call *integrationPvalCalc()* using the tansformed zscores obtained in the previous step. This function returns 
@@ -100,10 +100,10 @@ the p-value calculated for the alpha.
 i.e. for a list of alpha values, by calling *integrationPvalCalc()* multiple times e.g with lapply()
 
    #### Example
-   *pvalue <- integrationPvalCalc(<rdaAnn1>, <rdaAnn2>, <outFile_prefix>, <alpha>)*  
+   *pvalue <- integrationPvalCalc(<rda_ann1>, <rda_ann2>, <outFile_prefix>, <alpha_val>)*  
    where  
-   *<rdaAnn1>* and *<rdaAnn2>* are the transformed z-score rda file names for annotation1 and annotation2 obtained from the Randomimzation and Transformation step.
+   *<rda_ann1>* and *<rda_ann2>* are the transformed z-score rda file names for annotation1 and annotation2 obtained from the Randomimzation and Transformation step.
    *<outFile_prefix>* the name to be prefixed to all the output files generated.  
-   *<alpha>* is the relative weight to be assigned to the annotation1 can have values ranging from 0 to 1.default is 0.5  
+   *<alpha_val>* is the relative weight to be assigned to the annotation1 can have values ranging from 0 to 1.default is 0.5  
    
    See help() for details on further optional parameters, their defaults and output files generated.
