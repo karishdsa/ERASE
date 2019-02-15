@@ -76,10 +76,14 @@ the overlapping SNPs obtained from the previous step, to get the scores for each
 *randomization()* called with the parameter 'mode' set to 'MAE' generates the transformed z-scores.
   
    #### Example
-   *randomization()* is run using *ase_ann1_ann2* obtained from *getIntersectionMae()*, once using the transformed SNP scores of annotation1 to rank the SNPs as in (a) below
+   *randomization()* is run using *ase_ann1_ann2* obtained from *getIntersectionMae()*, once using the transformed SNP scores of annotation1 to rank the SNPs as in (a) below  
+   
    *(a)  randomization( <sigASE_ann>, <nonASE_ann> , <colname_rankSNPann1>, <colname_chk4distr>, <outFilePrefix_ann1>, eraseMode="MAE" )*  
-   and the second time using the transformed SNP scores of annotation2 as in (b)
+   
+   and the second time using the transformed SNP scores of annotation2 as in (b)  
+   
    *(b)  randomization( <sigASE_ann>, <nonASE_ann> , <colname_rankSNPann2>, <colname_chk4distr>, <outFilePrefix_ann2>, eraseMode="MAE" )*  
+   
    where  
    <sigASE_ann>, <nonASE_ann> are data frame objects containing the significant and non significant ASE signals - the output of *getIntersectionMae()*  
    <colname_rankSNPann1>,  <colname_rankSNPann2>  are the names of the columns with the transformed SNP scores for annotation 1 and annotation2 respectively that is used to rank the SNPs. 
