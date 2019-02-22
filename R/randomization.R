@@ -8,7 +8,7 @@ NULL
 eraseRsidRepeat <-TRUE      #Variable to set sampling with repeats True or False
 
 #setting for bins
-eraseBinwidth <- 2
+eraseBinwidth <- NULL # 2
 eraseBinwidthEnd <- 200
 
 eraseBinMode <- "AVGREADS"
@@ -96,7 +96,7 @@ randomization <- function(df_sigASE_SNPann,
                           colname_chk4distr,
                           outFilePrefix,
                           nIterations=10000 ,
-                          binwidth=eraseBinwidth,
+                          binwidth=2, #eraseBinwidth,
                           mode="SAE",
                           seedValue=NULL,
                           bins=NULL ){
@@ -104,9 +104,9 @@ randomization <- function(df_sigASE_SNPann,
   cat("\n\nERASE mode-", mode, "\nRandomization step start-" )
   date()
 
-  if( binwidth != eraseBinwidth) {
-    eraseBinwidth <- binwidth
-  }
+  #if( binwidth != eraseBinwidth) {
+    eraseBinwidth <<- binwidth
+  #}
 
   obs.ran <- randomisation_ref( df_sigASE_SNPann, df_nonASE_SNPann,
                                 colname_rankSNPann, colname_chk4distr,
