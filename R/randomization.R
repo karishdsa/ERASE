@@ -1,5 +1,7 @@
-
-
+#' @import data.table
+#' @import ggplot2
+#' @import gridExtra
+NULL
 
 #Global variables
 
@@ -19,9 +21,7 @@ eraseBinMode <- "AVGREADS"
 eraseBreaks <-1
 eraseProbs <-2
 
-#End Global variables
-
-
+#Global variables end
 
 
 #' Runs the randomization step for Single and multiple annotation
@@ -70,6 +70,10 @@ eraseProbs <-2
 #' generated will be assigned this prefix
 #' @param nIterations number of random selection iterations.
 #' Default value of 10000
+#' @param binwidth Bindwidth to be used. default = 2
+#' #' @param mode  - default value of 'SAE', calculates the p-value
+#' else for MAE will transform into z-score
+#'
 #' @param seedValue The seed value to be set. If NULL then no seed
 #' is set.
 #' @param bins bins to which loci are to be assigned based on their
@@ -80,10 +84,9 @@ eraseProbs <-2
 #' and the remaining are placed in a single last bin.
 #' The defaults can be changed by assigning the
 #' variables 'eraseBinwidth' and 'eraseBinwidthEnd' new values.
-#' @param mode  - default value of 'SAE', calculates the p-value
-#' else for MAE will transform into z-score
-#'
-#' @return the pnorm p-value
+
+#' @return the pnorm p-value if mode is 'SAE',
+#' transformed zscore rda file name if mode is 'MAE'
 #' @export
 #'
 #' @examples
@@ -93,19 +96,23 @@ randomization <- function(df_sigASE_SNPann,
                           colname_chk4distr,
                           outFilePrefix,
                           nIterations=10000 ,
+                          binwidth=eraseBinwidth,
+                          mode="SAE",
                           seedValue=NULL,
-                          bins=NULL,
-                          mode="SAE"){
+                          bins=NULL ){
 
-
-  cat("\n ERASE mode-", mode, "\nRandomization step start-" )
+  cat("\n\nERASE mode-", mode, "\nRandomization step start-" )
   date()
+
+  if( binwidth != eraseBinwidth) {
+    eraseBinwidth <<- binwidth
+  }
 
   obs.ran <- randomisation_ref( df_sigASE_SNPann, df_nonASE_SNPann,
                                 colname_rankSNPann, colname_chk4distr,
                                 nIterations, outFilePrefix, seedValue , bins)
   date()
-  cat("\n Randomization step end \n" )
+  cat("\nRandomization step end \n" )
   rm(obs.ran)
   gc()
 
@@ -113,14 +120,14 @@ randomization <- function(df_sigASE_SNPann,
   # if mode= SAE, calculating pval
   #if MAE, generating z-scores
   if(mode=="SAE"){
-    cat("\n Calculating p-value for: ", obsranRda, "\n")
+    cat("\nCalculating p-value :")
     outdir <- getwd()
     ret_val <- getPvalUsingZscore(obsranRda, outdir)
-    cat("\n Pval :", ret_val ,"\n")
+    cat("\n\nPval :", ret_val ,"\n")
     gc()
 
   } else {
-    cat("\n Generating zscores for: ", obsranRda, "\n")
+    cat("\nGenerating zscores for: ", obsranRda, "\n")
     outdir <- getwd()
     ret_val <- transform2StdNmlDistr (obsranRda)
   }
@@ -164,17 +171,19 @@ randomisation_ref <- function(q1data.overlap, q2data.overlap, field4mean, field2
 
   if (!is.null(seedval)){
     set.seed(seedval)
-    cat("\n randomisation_ref() Seed set=", seedval, "\n")
+    cat("\nSeed set=", seedval, "\n")
   } else {
-    cat("\n randomisation_ref()- No seed set \n")
+    cat("\nNo seed set \n")
   }
+  cat("Bin width = ", eraseBinwidth)
+
   setDF(q1data.overlap)
   setDF(q2data.overlap)
 
   #get observed mean  - the q1.ref
-  cat("\n mean calculated for : ", field4mean, "\n")
+  #cat("\n mean calculated for : ", field4mean, "\n")
   obs.meanval <- mean( q1data.overlap[ , field4mean] )
-  cat("median calculated for: ", field4mean, "\n")
+  #cat("median calculated for: ", field4mean, "\n")
   obs.medianval <- median(  q1data.overlap[ , field4mean])
 
   #
@@ -213,7 +222,7 @@ randomisation_ref <- function(q1data.overlap, q2data.overlap, field4mean, field2
   fname <- paste0(fname.prefix, "_obsRandomVals.rda" )
   save(q1data.overlap, ran.from.q2data.overlap , obs.meanval, ran.meanvals, obs.medianval, ran.medianvals,  file=fname, compress=TRUE)
 
-  cat ("\nOutput dir : ", getwd() , "\nOutput file : ", fname , "\n")
+  cat ("\nOutput folder : ", getwd() , "\nOutput file : ", fname , "\n")
 
   if (! is.null( field2chk4distr) ) {
     ##plot showing the distribution of (i)mean number of SNPs in randomly selected and observed, (ii) mean no. of unique SNPs
@@ -242,11 +251,11 @@ randomisation_ref_DistributionChk <- function( q1data.overlap, q2data.overlap, f
   #accessing the 1st element of breaks : brk.probs[[eraseBreaks]][1]
 
   #assigning the q2.ref (valid hetSNPs that overlap with ref) an index based on the avg Reads it has using the breaks obtained for the q1.ref (ASEs)
-  q2data.overlap <- assignBinIndex (q2data.overlap , brk.probs )   #returns the df with an additonal column containing the bin.id
+  q2data.overlap <- assignBinIndex (q2data.overlap , brk.probs, field2chk4distr )   #returns the df with an additonal column containing the bin.id
 
   nPm <- 1:nPermutations
-  cat("\n SNPs2Select = ", nSNPs2Select, "\n")
-  cat("\n Randomisation..")
+  cat("\nSNPs2Select = ", nSNPs2Select, "\n")
+  cat("\nRandomisation..")
   perm <-  lapply( nPm, function( y, all.hets, nSNPsSel ) {
 
     #randomly selecting from query2 dataset hets that overlapped to have the same avg read distribution as the q1.ref(ASEs)
@@ -277,7 +286,7 @@ randomisation_ref_DistributionChk <- function( q1data.overlap, q2data.overlap, f
 
     return( vals)
   }, all.hets <- q2data.overlap, nSNPsSel <- nSNPs2Select  )
-  cat("\n Randomisation end.. \n")
+  cat("\nRandomisation end.. \n")
   return(perm)
 }
 
@@ -372,13 +381,14 @@ getBreaksBin <- function ( vals) {
 }
 
 
-assignBinIndex <- function (df , breaks.probs ) {
+assignBinIndex <- function (df , breaks.probs, colNameDistrChk ) {
   #assign a unique index/binid to the valid het based on the bin its avg reads fall into
   #returns the df with an additonal column containing the bin.id
 
   lbrk <- length( breaks.probs[[eraseBreaks]] )-1   #length of the breaks the breaks start with 0 i.e 0,2,4...
   cts <- 1:lbrk
   df$bin.id <- NA
+  names(df)[ grep(colNameDistrChk, names(df), fixed = T)] <- "avg.reads"
 
   for( i in cts){
     from <- breaks.probs[[eraseBreaks]][i]
@@ -387,6 +397,8 @@ assignBinIndex <- function (df , breaks.probs ) {
     df[ r, "bin.id"] <- i
     rm(from, to, r )
   }
+  names(df)[ grep( "avg.reads", names(df), fixed = T)] <- colNameDistrChk
+
   return(df)
 }
 
@@ -411,6 +423,10 @@ selectRandomValhetWithAseDistrib <- function( valid, nSNPs, breaks.probs) {
     nhets2Select <- r.id.freq[i, "Freq" ]
     rsids.lst <- valid[ which(valid$bin.id == binid), "cmp.col" ]
     #cat(" ", i)
+    if(nhets2Select >0 & length(rsids.lst)==0){
+      cat("\n BinWidth = ", eraseBinwidth, "\n")
+      stop("Please check bin width. No SNPs in bin to randomly select from.")
+    }
     r.hets <- sample(x=rsids.lst , size=nhets2Select, replace=eraseRsidRepeat )
     rm(binid, nhets2Select, rsids.lst )
     return( r.hets)
@@ -499,7 +515,7 @@ getPvalUsingZscore <- function( obsRandomValsrda, outdir) {
   currdir <- getwd()
   cat("\n rdafile= ", obsRandomValsrda, "\n")
   cat("Outfut folder= ", outdir , "\n")
-  cat("Output file prefix= ", fname.prefix, "\n")
+  #cat("Output file prefix= ", fname.prefix, "\n")
   setwd(outdir)
   pval <- getPval(obs.meanval, ran.meanvals, nrow(q1data.overlap), fname.prefix )
   setwd(currdir)
@@ -535,7 +551,7 @@ transform2StdNmlDistr <- function (rda){
   out.rda <- zscoreStdNmlDistr (obs.meanval, ran.meanvals, fname.prefix)
 
   cat ("\n Zscore generation complete \n")
-  return(T)
+  return(out.rda)
 
 }
 
@@ -605,7 +621,14 @@ zscoreStdNmlDistr  <- function(obs, ran, file.prefix){
 
 plotMeanSNPsPerField2Chk4DistrBin <- function( obs,ran , field2chk4distr, fname.prefix, bins=NULL ) {
 
+  names(obs)[ grep(field2chk4distr, names(obs), fixed = T)] <- "avg.reads"
+  names(ran)[ grep(field2chk4distr, names(ran), fixed = T)] <- "avg.reads"
+
+
   setDT(obs); setDT(ran)
+  #setnames(obs, old = field2chk4distr, new = "avg.reads")
+
+  #setnames(ran, old = field2chk4distr, new = "avg.reads")
 
 
   #get the avg no. of SNPs per bin across perm
@@ -634,7 +657,7 @@ plotMeanSNPsPerField2Chk4DistrBin <- function( obs,ran , field2chk4distr, fname.
   rm(res)
 
   #obs
-  val<- obs[ ,.SD, .SDcol=field2chk4distr]
+  val<- obs[ ,.SD, .SDcol="avg.reads"]
   if( ! is.null(bins)) {
     brk <- bins
   } else {
@@ -642,6 +665,7 @@ plotMeanSNPsPerField2Chk4DistrBin <- function( obs,ran , field2chk4distr, fname.
       brk <- getBreaksBin(val )
     }
   }
+
   h <- hist(val$avg.reads, breaks=brk, plot=F)
   obsPerBin <- h$counts
   obsPerBin <- data.table( nSNPs = obsPerBin)
@@ -653,8 +677,10 @@ plotMeanSNPsPerField2Chk4DistrBin <- function( obs,ran , field2chk4distr, fname.
   setDF(val)
   #passing the bin id for the avg reads in the observed
   brk.probs <- getProbabilities(val$avg.reads, bins )
-  obsmeanAvgReadsPerBin <- assignBinIndex (val , brk.probs ) #assign the bin ids for the avg reads using the breaks vals
+  obsmeanAvgReadsPerBin <- assignBinIndex (val , brk.probs, field2chk4distr ) #assign the bin ids for the avg reads using the breaks vals
   #get the avg per bin
+  names(obsmeanAvgReadsPerBin)[ grep(field2chk4distr, names(obsmeanAvgReadsPerBin), fixed = T)] <- "avg.reads"
+
   setDT(obsmeanAvgReadsPerBin)
   obsmeanAvgReadsPerBin <- obsmeanAvgReadsPerBin[ , .(meanAvgReads=mean(avg.reads)), by="bin.id"]
   setorder(obsmeanAvgReadsPerBin, bin.id)

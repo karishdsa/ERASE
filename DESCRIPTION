@@ -14,3 +14,4 @@ Imports: ggplot2,
     gridExtra,
     data.table
 RoxygenNote: 6.1.1
+Suggests: testthat

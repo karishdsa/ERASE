@@ -8,7 +8,8 @@ If the mode is SAE, generates the p-value else zscores.}
 \usage{
 randomization(df_sigASE_SNPann, df_nonASE_SNPann, colname_rankSNPann,
   colname_chk4distr, outFilePrefix, nIterations = 10000,
-  seedValue = NULL, bins = NULL, mode = "SAE")
+  binwidth = eraseBinwidth, mode = "SAE", seedValue = NULL,
+  bins = NULL)
 }
 \arguments{
 \item{df_sigASE_SNPann}{-dataframe containing the significant
@@ -39,6 +40,10 @@ generated will be assigned this prefix}
 \item{nIterations}{number of random selection iterations.
 Default value of 10000}
 
+\item{binwidth}{Bindwidth to be used. default = 2
+#' @param mode  - default value of 'SAE', calculates the p-value
+else for MAE will transform into z-score}
+
 \item{seedValue}{The seed value to be set. If NULL then no seed
 is set.}
 
@@ -50,9 +55,6 @@ colname_chk4distr value is  < 200 (in variable 'eraseBinwidthEnd')
 and the remaining are placed in a single last bin.
 The defaults can be changed by assigning the
 variables 'eraseBinwidth' and 'eraseBinwidthEnd' new values.}
-
-\item{mode}{- default value of 'SAE', calculates the p-value
-else for MAE will transform into z-score}
 }
 \value{
 the pnorm p-value
