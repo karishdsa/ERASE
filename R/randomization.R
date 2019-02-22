@@ -105,7 +105,7 @@ randomization <- function(df_sigASE_SNPann,
   date()
 
   if( binwidth != eraseBinwidth) {
-    eraseBinwidth <<- binwidth
+    eraseBinwidth <- binwidth
   }
 
   obs.ran <- randomisation_ref( df_sigASE_SNPann, df_nonASE_SNPann,
