@@ -49,7 +49,7 @@ using the overlapping SNPs obtained from Step 1 above, to get the p-value for en
    *<colname_rankSNPann>* is the name of the column with the transformed SNP score e.g. in case of GWAS the p-value can be transformed to "neglog10pval" containing -log10(p), that is used to rank the SNPs  
    *<colname_chk4distr>* name of the column containing values to be accounted for during randomization e.g. the average read depth  
    *<outFile_prefix>* the name to be prefixed to all the output files generated.  
-   Randomization is run for a default 10000 iterations with bin size of 2. 
+   Randomization is run for a default 10000 iterations with bin size of 2. There is an optional parameter to set seed. However, it doesn't guarantee reproducibility across different operating systems
   
    See help() for more details, optional parameters, their defaults and output files generated.  
 
@@ -90,7 +90,7 @@ the overlapping SNPs obtained from the previous step, to get the scores for each
    *<colname_chk4distr>* name of the column containing values to be accounted for during randomization e.g. the average read depth  
    *<outFilePrefix_ann1>*, *<outFilePrefix_ann2>* the names to be prefixed to all the output files generated for annotaion1 and annotation2 respectively.  
    
-   See help() for more details, optional parameters, their defaults and output files generated.
+   See *randomization()* in the above SAE section and help() for more details, optional parameters, their defaults and output files generated.
 
 **3. Integration and p-value calculation :** Examine enrichment based on the value assigned to the 
 calibration parameter alpha (indicates the relative weight of the SNP annotation1). Call *integrationPvalCalc()* using the tansformed zscores obtained in the previous step. This function returns 
