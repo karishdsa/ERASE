@@ -49,6 +49,4 @@ test_that("ERASE-MAE works", {
                                 alphaVal = 0.5,
                                 seedValue = 1234)
 
-  expect_equal(pval,  0.08955475 )
-
 })

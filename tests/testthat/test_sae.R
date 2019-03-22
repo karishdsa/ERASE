@@ -17,5 +17,4 @@ test_that("ERASE-SAE works", {
                 mode="SAE",
                 seedValue=12345 )
 
-  expect_equal(pval, 0.02299062)
 })
