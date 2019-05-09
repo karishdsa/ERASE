@@ -9,7 +9,7 @@ multiple annotation enrichment in ASE datasets <link>
 
 
 ## Install
-devtools::install_github("kmdsa/ERASE")
+devtools::install_github("karishdsa/ERASE")
 
 ## Usage
 This section describes the steps to run ERASE examining enrichment in single (SAE) 
